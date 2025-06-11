@@ -17,10 +17,21 @@ def register():
     if request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
+        phone = request.form['phone']
+        course = request.form['course']
+        address = request.form['address']
+        contact = request.form['contact']
 
         conn = mysql.connector.connect(**db_config)
         cursor = conn.cursor()
-        cursor.execute('INSERT INTO students (name, email) VALUES (%s, %s)', (name, email))
+
+        query = '''
+        INSERT INTO students (name, email, phone, course, address, contact)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        '''
+        values = (name, email, phone, course, address, contact)
+
+        cursor.execute(query, values)
         conn.commit()
         cursor.close()
         conn.close()
