@@ -156,3 +156,4 @@ http://<EC2-PUBLIC-IP>:5000
 ✅ View registered students at /students
 ✅ CI/CD with Jenkins (auto deploy on push)
 ✅ GitHub Webhook for automation
+.
