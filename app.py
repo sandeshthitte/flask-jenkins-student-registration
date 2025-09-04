@@ -5,10 +5,10 @@ app = Flask(__name__)
 
 # Database configuration
 db_config = {
-    'host': 'db',
-    'user': 'root',
-    'password': 'password',
-    'database': 'studentsdb'
+    'host': 'localhost',
+    'user': 'studentuser',
+    'password': 'password123',
+    'database': 'studentdb'
 }
 
 # Home page: Registration form
@@ -36,8 +36,21 @@ def register():
         cursor.close()
         conn.close()
 
-        return 'Student Registered Successfully!'
+        return '✅ Student Registered Successfully!'
     return render_template('register.html')
 
+
+# Page to list all registered students
+@app.route('/students')
+def list_students():
+    conn = mysql.connector.connect(**db_config)
+    cursor = conn.cursor()
+    cursor.execute("SELECT name, email, phone, course, address, contact FROM students")
+    rows = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return render_template("students.html", students=rows)
+
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)
